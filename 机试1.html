@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style type="text/css">
+
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			background: #404040;
+			margin: 0 auto;
+			padding: 50px;
+			color: #fff;
+		}
+		#alert{
+			width: 400px;
+			height: 40px;
+			line-height: 40px;
+			background: orange;
+			margin: 0 auto;
+			border-radius: 10px;
+			text-align: center;
+		}
+		table{
+			width: 440px;
+			margin: 0 auto;
+			margin-top: 20px;
+			border: 0;
+			border-spacing: 15px;
+		}
+		th{
+			height: 50px;
+			font-size: 22px;
+			border: 0;
+			text-align: left;
+		}
+		td{
+			height: 30px;
+			border: 0;
+		}
+		li{
+			list-style-type: none;
+			float:right;
+			width: 79px;
+			text-align: center;
+			background: #fff;
+			color: #fff;
+			border-right: 1px solid #CCCCCC;
+			height: 30px;
+			line-height: 30px;
+		}
+		input{
+			width: 240px;
+			float:right;
+			height: 30px;
+			line-height: 30px;
+			background: gray;
+			border: 0;
+			font-size: 16px;
+			color: #fff;
+		}
+		input.last{
+			width: 160px;
+		}
+		#yzm{
+			width: 70px;
+			float:right;
+			text-align: center;
+			background: #fff;
+			height: 30px;
+			line-height: 30px;
+			color: #000000;
+			font-size: 20px;
+			margin-left: 10px;
+		}
+		#checkBox{
+			width: 120px;
+			margin: 0 auto;
+			color: #fff;
+		}
+		#check{
+			float: none;
+			width: 20px;
+			height: 20px;
+			margin: 0 auto;
+		}
+		#sub{
+			float: none;
+			display: block;
+			width: 120px;
+			font-size: 20px;
+			margin: 0 auto;
+			background: dodgerblue;
+			color: #fff;
+		}
+
+	</style>
+	<script src="base.js"></script>
+	<script type="text/javascript">
+
+	    window.onload = function  () {
+		   var inputNode = document.getElementsByTagName('input');
+		   var subNode = document.getElementById('sub')
+		   var alertNode = document.getElementById('alert');
+		   var liNode = document.getElementsByTagName('li');
+		   var yzmNode = document.getElementById('yzm');
+		   var checkNode = document.getElementById('check');
+
+			inputNode[0].onblur = function () {
+			checkUsername(this.value);
+			}
+			inputNode[1].onblur = function () {
+				checkPassword(this.value);
+			}
+			inputNode[2].onblur = function () {
+				samePassword(this.value);
+			}
+
+			inputNode[3].onblur = function () {
+				checkID(this.value);
+			}
+
+			inputNode[4].onblur = function () {
+				checkTel(this.value);
+			}
+
+			inputNode[5].onblur = function () {
+				checkYzm(this.value);
+			}
+
+			//用户名称验证
+			function checkUsername(username){
+				if(username.length < 8){
+					alertNode.innerHTML = '用户名只长度不能少于8'
+					return false;
+				}
+				if(!(/^[0-9_A-Z]*$/i.test(username))){
+					alertNode.innerHTML = '用户名只能是数字和字母'
+					return false;
+				}
+				if (/^\d/.test(username)) {
+					alertNode.innerHTML = '用户名不能以数字开头'
+					 return false;
+				}
+				alertNode.innerHTML = '用户名输入合法';
+				     return true;
+			}
+
+			//登录密码验证
+			function checkPassword(password){
+				if(password.length < 4 || password.length>15){
+					alertNode.innerHTML = '密码长度不正确'
+					return false;
+				}
+				if (password.length >= 4 && password.length <= 6) {
+					liNode[2].style.background = 'red';
+					liNode[1].style.background = '#fff';
+					liNode[0].style.background = '#fff';
+				}
+				if (password.length >= 7 && password.length <= 10) {
+					liNode[1].style.background = 'orange';
+					liNode[0].style.background = '#fff';
+					liNode[2].style.background = '#fff';
+				}
+				if (password.length >= 11 && password.length <= 15) {
+					liNode[0].style.background = 'green';
+					liNode[1].style.background = '#fff';
+					liNode[2].style.background = '#fff';
+				}
+				alertNode.innerHTML = '密码输入合法';
+				return true;
+			}
+
+			//重复登录密码
+			function samePassword (password) {
+				if (inputNode[2].value != inputNode[1].value) {
+					alertNode.innerHTML = '两次密码不一致'
+					return false;
+				}
+				alertNode.innerHTML = '两次密码一致';
+				   return true;
+			}
+
+			//身份证验证
+			function checkID (id) {
+				if (!(/^\d{17}(\d|X)$/.test(id))) {
+					alertNode.innerHTML = '身份证输入不合法'
+					return false;
+				}
+				alertNode.innerHTML = '身份证输入合法';
+				return true;
+			}
+
+			//中奖通知手机
+			function checkTel (tel) {
+				if (!(/^\d{11}$/.test(tel))) {
+					alertNode.innerHTML = '手机号码输入不正确'
+					return false;
+				}
+				alertNode.innerHTML = '手机号码输入正确';
+				   return true;
+			}
+
+			//验证码
+			function checkYzm (Yzm) {
+				if (inputNode[5].value != yzmNode.innerHTML) {
+					alertNode.innerHTML = '验证码输入错误'
+					return false;
+				}
+				alertNode.innerHTML = '验证码输入正确';
+				   return true;
+			}
+
+			//验证码的随机生成
+			yzmNode.onclick = function  () {
+				var arr = new Array(3)
+				for(var i = 0; i < 3; i++) {
+						arr[i] = String.fromCharCode(Math.floor(Math.random() * 26 + 65));
+				}
+				arr.splice(Math.floor(Math.random()*4),0,Math.floor(Math.random()*10));
+				var str = arr.join('');
+				yzmNode.innerHTML = str;
+			}
+
+			//“10天内免登录的设置”
+			var username = getCookie('username');
+			var password = getCookie('password');
+			if(username.length !=0 && password.length !=0 ){
+				inputNode[0].value = username;
+				inputNode[1].value = password;
+			}
+
+			//注册按钮的设置
+			subNode.onclick = function(){
+				if (checkUsername(inputNode[0].value)&&checkPassword(inputNode[1].value)&&samePassword(inputNode[2].value)&&checkID(inputNode[3].value)&&checkTel(inputNode[4].value)&&checkYzm(inputNode[5].value)) {
+					alertNode.innerHTML = '注册成功';
+				}
+				//点击注册时，保存用户名和密码
+				if(checkNode.checked){
+					var username = inputNode[0].value;
+					var password = inputNode[1].value;
+					setCookie('username',username,new Date('2017-2-2'));
+					setCookie('password',password,new Date('2017-2-2'));
+				}
+
+				}
+
+			}
+
+
+		</script>
+
+	</head>
+	<body>
+		<div id="alert">
+
+			</div>
+			<table border="" cellspacing="" cellpadding="">
+				<tr>
+					<th colspan="2">账户详细资料</th>
+				</tr>
+				<tr>
+					<td>用户名称</td>
+					<td><input type="text" name="" id="" placeholder="请输入用户名" /></td>
+				</tr>
+				<tr>
+					<td>登录密码</td>
+					<td><input type="password" name="" id="" placeholder="请输入密码" /></td>
+				</tr>
+				<tr>
+					<td>重复登录密码</td>
+					<td><input type="password" name="" id="" placeholder="重复登录密码" /></td>
+				</tr>
+				<tr>
+					<td>密码安全级别</td>
+					<td>
+						<ul>
+							<li>高</li><li>中</li><li>低</li>
+						</ul>
+					</td>
+				</tr>
+
+				<tr>
+					<th colspan="2">个人信息资料</th>
+				</tr>
+				<tr>
+					<td>身份证</td>
+					<td><input type="text" name="" id="" placeholder="请输入身份证号码" /></td>
+				</tr>
+				<tr>
+					<td>中奖通知手机</td>
+					<td><input type="text" name="" id="" placeholder="输入中奖手机号码" /></td>
+				</tr>
+				<tr>
+					<td>验证码</td>
+					<td>
+						<div id="yzm">3242</div>
+						<input type="text" class="last" id="" placeholder="输入验证码" />
+					</td>
+				</tr>
+			</table>
+			<div id="checkBox">
+				<input type="checkbox" id="check"/><span>10天内免登录</span>
+				<input type="submit" value="注册" id="sub"/>
+			</div>
+	</body>
+</html>

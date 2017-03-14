@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			html,body{
+				height: 100%;
+			}
+			a{
+				text-decoration: none;
+				color: #000;
+			}
+			#ma{
+				background: url(img/register.png)no-repeat;
+				width: 1047px;
+				height: 757px;
+				margin: 0 auto;
+			}
+			#top{
+				width:1047;
+				height: 110px;
+			}
+			#top P{
+				float: right;
+				margin-top: 30px;
+				line-height: 30px;
+			}
+			#yi{
+				float: right;
+				width: 50px;
+				height: 30px;
+				background: #F0F0F0;
+				line-height: 30px;
+				text-align: center;
+				border-radius: 3px;
+
+			}
+			#body{
+				width: 500px;
+				height: 500px;
+				float: left;
+				padding-left: 30px;
+			}
+			#right{
+				width: 500px;
+				height: 500px;
+				float: left;
+			}
+			input{
+				width: 250px;
+				height: 30px;
+				margin-top: 20px;
+			}
+			#zc{
+				background: #008001;
+				color: #fff;
+				margin-left: 75px;
+				border: 0;
+				width: 200px;
+				border-radius:20px ;
+			}
+			#tishi{
+				width: 300px;
+				height: 30px;
+				text-align: center;
+				background: #FEA500;
+				margin-top: 10px;
+				line-height: 30px;
+				border-radius: 5px;
+				margin-left: 30px;
+			}
+			#yzm{
+				width:60px;
+				height: 30px;
+				background: #008001;
+				float: right;
+				margin-right: 123px;
+				margin-top: 21px;
+				line-height: 30px;
+				text-align: center;
+				color: #fff;
+				cursor: pointer;
+			}
+			ul{
+				width: 300px;
+				margin-top: 30px;
+				display: none;
+			}
+			li{
+				border-bottom:1px solid #CCC ;
+				height: 30px;
+				list-style: none;
+				color: green;
+				text-indent: 2em;
+			}
+			h3{
+				font-weight: 100;
+			}
+		</style>
+		<script src="js/cookie.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			onload=function(){
+				var input = document.getElementsByTagName("input");
+				var tishi = document.getElementById("tishi");
+				var yzm = document.getElementById("yzm");
+				input[0].onblur=function(){
+					var val = this.value;
+					var reg = /^[a-zA-Z_-]\w{3,11}$/;
+					if(reg.test(val)){
+						tishi.innerHTML = "用户名合法";
+					}
+					else{
+						tishi.innerHTML = "用户名不合法"
+					}
+				}
+				input[1].onblur = function(){
+					var val = this.value;
+					var reg = /^.{8,20}$/;
+					if(reg.test(val)){
+						tishi.innerHTML = "密码合法";
+					}
+					else{
+						tishi.innerHTML = "密码不合法"
+					}
+				}
+				input[2].onblur = function(){
+					if(this.value == input[1].value){
+						tishi.innerHTML = "重复密码正确";
+					}
+					else{
+						tishi.innerHTML = "重复密码不正确";
+					}
+				}
+				input[3].onblur = function(){
+					var val = this.value;
+					var reg = /^1\d{10}$/;
+					if(reg.test(val)){
+						tishi.innerHTML = "手机号码格式正确"
+					}
+					else{
+						tishi.innerHTML = "手机号码格式不正确"
+					}
+				}
+					var nm = parseInt(Math.random()*100/10);
+					var num = parseInt(Math.random()*100/10);
+					var nu = parseInt(Math.random()*100/10);
+					var um = parseInt(Math.random()*100/10);
+					yzm.innerHTML = nm + "" + num + "" + nu + "" + um;
+				input[4].onblur = function(){
+					if(this.value == yzm.innerHTML){
+						tishi.innerHTML = "验证码正确"
+					}
+					else{
+						tishi.innerHTML = "验证码不正确";
+					}
+				}
+				yzm.onclick = function(){
+					var nm = parseInt(Math.random()*100/10);
+					var num = parseInt(Math.random()*100/10);
+					var nu = parseInt(Math.random()*100/10);
+					var um = parseInt(Math.random()*100/10);
+					yzm.innerHTML = nm + " " + num + " " + nu + " " + um;
+				}
+				var zc = document.getElementById("zc");
+				zc.onclick = function(){
+					var d = new Date();
+					d.setDate(d.getDate()+7);
+					setCookie("用户名",input[0].value,d);
+					setCookie("密码",input[1].value,d);
+				console.log(setCookie());
+				//已注册账号
+				var ul = document.getElementsByTagName("ul")[0];
+				var li = document.getElementsByTagName("li");
+				var name = getCookie("用户名");
+				var pass = getCookie("密码");
+				if(name && pass){
+					ul.style.display = "block";
+					li[0].innerHTML = name;
+					li[1].innerHTML = pass;
+				}
+
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="ma">
+			<div id="top">
+				<p>我已注册,现在就&nbsp;&nbsp;<span id="yi"><a href="index.html">登录</a></span></p>
+			</div>
+			<div id="body">
+				&nbsp;用&nbsp;户&nbsp;名 <input type="text" placeholder="请输入用户名"/><br />
+				&nbsp;&nbsp;&nbsp;密&nbsp;&nbsp;&nbsp;码 <input type="password" placeholder="请输入密码"/><br />
+				重复密码<input type="password" placeholder="请再次输入密码"/><br />
+				手&nbsp;机&nbsp;号 <input type="text" placeholder="请输入手机号"/><br />
+				验&nbsp;证&nbsp;码 <input type="text" placeholder="请输入验证码"/><p id="yzm"></p><br />
+				<input type="button" value="注 册" id="zc" /><br />
+				<div id="tishi"></div>
+			</div>
+			<div id="right">
+				<h3>已经注册的账号:</h3>
+				<ul>
+					<li></li>
+					<li></li>
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>

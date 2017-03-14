@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/cookie.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			onload=function(){
+				var a=document.getElementsByTagName("a")[0];
+				var box=document.getElementById("box");
+				var gbbtn=document.getElementById("gbbtn");
+
+				a.onclick=function(){
+					box.style.display="block";
+				}
+				gbbtn.onclick=function(){
+					box.style.display="none";
+				}
+				var main=document.getElementById("main");
+				var p=main.getElementsByTagName("p")[0];
+				var input1=main.getElementsByTagName("input");
+				p.onmousedown=function(e){
+					var evt=e ||event;
+					var px=evt.offsetX;
+					var py=evt.offsetY;
+					document.onmousemove=function(e){
+						var evt=e||event;
+						main.style.left=evt.clientX-px+"px";
+						main.style.top=evt.clientY-py+"px";
+					}
+					document.onmouseup=function(){
+						document.onmousemove=null;
+						document.onmouseup=null;
+					}
+				}
+				input1[2].onclick=function(){
+					var name=getCookie("用户名");
+					var pass=getCookie("密码");
+					if(input1[0].value==name && input1[1].value==pass){
+						alert("登录成功1");
+					}
+					else{
+						alert("登录失败!");
+					}
+				}
+			}
+		</script>
+		<style type="text/css">
+
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			a{
+				text-decoration: none;
+				color: #000;
+			}
+			a:hover{
+				color: green;
+			}
+			html,body{
+				height: 100%;
+			}
+			body{
+				background: url(img/bg.png)no-repeat center;
+			}
+			#top{
+				margin-top: 20px;
+			}
+			ul{
+				float: right;
+				margin-right: 50px;
+			}
+			li{
+				float: left;
+				list-style: none;
+				text-align: center;
+				width: 50px;
+			}
+			#box{
+				height: 100%;
+				width: 100%;
+				background:rgba(100,100,100,0.5);
+				position: fixed;
+				top:0px;
+				left:0px;
+				display: none;
+			}
+			#main p{
+				color: green;
+				cursor: pointer;
+				margin-bottom: 80px;
+				text-indent: 1em;
+				font-size: 14px;
+				width: 389px;
+				height: 35px;
+				background: #F7F7F7;
+				line-height: 35px;
+			}
+			#main p span{
+				float: right;
+				width: 35px;
+				height: 35px;
+				background: url(img/close.png)no-repeat center;
+			}
+			input{
+				width: 250px;
+				margin-bottom: 20px;
+				height: 30px;
+			}
+			#main .p{
+				padding-left: 50px;
+				width:200px;
+			}
+			form{
+				margin-left: 30px;
+			}
+			#btn{
+				margin-left: 50px;
+				background: green;
+				border: 0;
+				color: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="top">
+			<ul>
+				<li><a href="#">登录</a></li>
+				<li><a href="注册.html">注册</a></li>
+			</ul>
+		</div>
+		<div id="box">
+			<div id="main" style="width: 389px;height: 444px;position: absolute;top:100px;left:500px;background:url(img/login.png)no-repeat center;">
+				<p>请使用自己注册的账号登录<span id="gbbtn"></span></p>
+				<form action="" method="post">
+					用户名:<input type="text" /><br />
+					密 &nbsp; 码:<input type="password" /><br />
+					<input type="button" value="登录" id="btn"/>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
